@@ -1,0 +1,15 @@
+suppressMessages(library("DiffBind"))
+Data <- dba(sampleSheet="ino80_H2AZ_H3_overlappeak.csv")
+Data <- dba.count(Data,score=DBA_SCORE_RPKM_FOLD)
+Data <- dba.contrast(Data,minMembers=2,categories=DBA_CONDITION)
+Data <- dba.analyze(Data,method=DBA_DESEQ2,bFullLibrarySize=FALSE,filter=1)
+Data.DB <- dba.report(Data,method=DBA_DESEQ2,th=1)
+DataFrame <- data.frame(Data.DB)
+Down <- subset(DataFrame,DataFrame$Fold > 0 & DataFrame$p.value <=0.05)
+Up <- subset(DataFrame,DataFrame$Fold < 0 & DataFrame$p.value <=0.05)
+write.table(DataFrame,"H2AZ_H3_FC.xls",sep="\t",row.names=F,quote=F)
+write.table(Down,"H2AZ_H3_Down.xls",sep="\t",row.names=F,quote=F)
+write.table(Up,"H2AZ_H3_Up.xls",sep="\t",row.names=F,quote=F)
+nrow(Down);nrow(Up)
+#[1] 2300
+#[1] 2042
