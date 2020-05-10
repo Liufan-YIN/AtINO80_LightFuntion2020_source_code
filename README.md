@@ -5,20 +5,22 @@ Note: the bioinformatics scripts conclude shell and R scripts which are given in
 
 1.analysis of RNAseq data for atino80-5 mutant at white light
 
-1)copy fastq.gz file to the current directory
+  1)copy fastq.gz file to the current directory
      cp /mnt/USB1/WL_atino80/*.gz ./
 
-2)trim adapters, map reads to genome, sort bam files, get bigwig files and align reads to genes
+  2)trim adapters, map reads to genome, sort bam files, get bigwig files and align reads to genes
      sh RNAseq_paired_stranded.sh
 
-3)get differentially expressed genes comparing mutant with wild-type
+  3)get differentially expressed genes comparing mutant with wild-type
      Rscript RNAseq_DEG_atino80_WL.r
 
 2.overlap between AtINO80-regulated and light-induced genes for Figure 3A-3C. 
+  
   1)use R to get venn diagram and p value for two sets of genes, analyze GO functions for overlap genes
 source("OverlapPlot_function.r")# import function firstly
  
 Plot("/Volumes/OpheliaData/atino80/atino80_0317/light_regulate_genes/light_INO80_5/","/Volumes/OpheliaData/atino80/atino80_0317/light_regulate_genes/light_regulate/PNAS/up_all.xls","/Volumes/OpheliaData/atino80/atino80_0317/RNAseq/WL_atino80/DEG/15bei_pvalue/WLino80_diff.xls","light_induced","atino80_diff","atino80-diff and light_induced")
+  
   2)use R to get bubble figure for GO analysis result 
 source("GOBubblePlot_function.r")# import function firstly
      
