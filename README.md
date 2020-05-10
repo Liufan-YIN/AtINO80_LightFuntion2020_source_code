@@ -4,10 +4,13 @@ The code is built for the paper named "The chromatin remodeling factor AtINO80 r
 Note: the bioinformatics scripts conclude shell and R scripts which are given in directories named "shell_scripts" and "R_scripts" respectively. R custom functions used in R scripts are listed in directory named "R_functions". Please source the related funcitons befor perform R script. In addition to, the provided scripts here may require additional steps and modifications to perform well on different platforms.
 
 1.analysis of RNAseq data for atino80-5 mutant at white light
+
 1)copy fastq.gz file to the current directory
      cp /mnt/USB1/WL_atino80/*.gz ./
+
 2)trim adapters, map reads to genome, sort bam files, get bigwig files and align reads to genes
      sh RNAseq_paired_stranded.sh
+
 3)get differentially expressed genes comparing mutant with wild-type
      Rscript RNAseq_DEG_atino80_WL.r
 
