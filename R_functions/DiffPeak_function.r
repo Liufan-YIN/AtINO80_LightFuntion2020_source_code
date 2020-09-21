@@ -1,10 +1,10 @@
-DiffPeak1 <- function(Path,samplename,peakfile,Fold,pvalue) {
-setwd(Path)
+DiffPeak1 <- function(samplename,peakfile,Fold,pvalue) {
+#samplename-name of antibody; peakfile-inputfile for enriched regions; Fold-foldchange of enrichment value for mutant and WT; pvalue-p value for foldchange
 Peak <- read.delim(peakfile,header=T)
 Peaksummary_down <- Peak[,c(1:3,11,13)]                              
 Peaksummary_up <- Peak[,c(1:3,8,10)] 
 colnames(Peaksummary_down)=c("seqnames","start","end","FC","FDR")                        
-colnames(Peaksummary_up)=c("seqnames","start","end","FC","FDR")                                              
+colnames(Peaksummary_up)=c("seqnames","start","end","FC","FDR")                                     
 rownames(Peaksummary_down)=paste(rep("diffPeak", nrow(Peaksummary_down)), 1:nrow(Peaksummary_down), sep="_") 
 rownames(Peaksummary_up)=paste(rep("diffPeak", nrow(Peaksummary_up)), 1:nrow(Peaksummary_up), sep="_")      
 sigPeakdown <- subset(Peaksummary_down,Peaksummary_down$FC>=Fold & Peaksummary_down$FDR <=pvalue)

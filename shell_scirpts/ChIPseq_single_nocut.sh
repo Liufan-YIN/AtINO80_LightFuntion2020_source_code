@@ -13,7 +13,7 @@ fastq-dump  SRR6412325.sra
 fastq-dump  SRR6412326.sra
 fastq-dump  SRR6412327.sra
 fastq-dump  SRR6412328.sra
-echo "jieya done"
+echo "unzip done"
 mkdir QC
 fastqc -o QC -f fastq  *.fastq
 echo "qc done"
@@ -32,9 +32,6 @@ samtools rmdup -s ${id}_q20_sort.bam   ${id}_q20_sort_rmdup.bam
 echo "${id} rmdup done"
 samtools index ${id}_q20_sort_rmdup.bam
 echo "${id} index done"
-samtools view -F 4 -c ${id}_q20_sort.bam
-samtools view -F 4 -c ${id}_q20_sort_rmdup.bam
-echo "reads done"
 bamCoverage -b ${id}_q20_sort_rmdup.bam -o ${id}_q20_sort_rmdup_RPKM.bigwig --binSize 10 --normalizeUsing RPKM
 echo "bigwig done"
 bedtools bamtobed -i ${id}_q20_sort_rmdup.bam > ${id}_q20_sort_rmdup.bed

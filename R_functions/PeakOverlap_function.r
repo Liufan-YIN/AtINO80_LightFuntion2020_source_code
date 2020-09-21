@@ -1,6 +1,8 @@
 Peakover <- function(Afilename,Bfilename,peak1name,peak2name,mainname){
+ #packages
  suppressMessages(library("ChIPpeakAnno"))
  suppressMessages(library("GenomicRanges"))
+ #Afilename-filename of Afile; Bfilename-filename of Bfile; peak1name-name of peaks in Afile; peak2name-name of peaks in Bfile; mainname-prefiex of name in outputfile
  Afile <- read.delim(Afilename,header=F)
  Bfile <- read.delim(Bfilename,header=F)
  Agranges <- GRanges(seqnames=Afile[,1],ranges=IRanges(start=Afile[,2],end=Afile[,3],names=paste("A",rep(1:nrow(Afile)),sep="")))

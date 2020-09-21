@@ -1,6 +1,7 @@
-BubblePlot <- function(Path,GOfile,SizeLimits,SizeRange,BarValue) {
+BubblePlot <- function(GOfile,SizeLimits,SizeRange,BarValue) {
+#package
 suppressMessages(library("ggplot2"))
-setwd(Path)
+#GOfile-input file of GO analysis results including term order, function terms, gene count number and p value; SizeLimits-dot size limits for  gene number; Barvalue-color bar for log10(p value)
 allGO=read.table(GOfile,sep="\t",header=TRUE)
 GOup <- allGO[,c(1,3,4)]
 GOup$names <- "Up"

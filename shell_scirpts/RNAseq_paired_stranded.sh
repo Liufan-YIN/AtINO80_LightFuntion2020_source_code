@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 gzip -d *.fastq.gz 
-echo "jieya done"
+echo "unzip done"
 mkdir QC 
 fastqc -o QC -f fastq  *.fastq
 echo "qc done"
@@ -20,7 +20,7 @@ echo "done"
 ls -1 trim*_R1.fastq | while read id
 do
 echo "${id%_R1*}"
-hisat2 -p 8 --rna-strandness RF -x ~/genome/tair10/hisat2_index/tair10_tran -1 ${id%_R1*}_R1.fastq  -2  ${id%_R1*}_R2.fastq  -S  ${id%_R1*}.sam;
+hisat2 -p 8 --rna-strandness RF -x ~/genome/tair10/hisat2_index/tair10_tran -1 ${id%_R1*}_R1.fastq  -2  ${id%_R1*}_R2.fastq  -S  ${id%_R1*}.sam
 echo "mapping done"
 samtools view -q 20  -bS ${id%_R1*}.sam   > ${id%_R1*}_q20.bam
 echo "q20 bam done"
@@ -28,14 +28,11 @@ samtools sort ${id%_R1*}_q20.bam -o ${id%_R1*}_q20_s.bam
 echo "sort done"
 samtools index ${id%_R1*}_q20_s.bam
 echo "index done"
-samtools view -F 4 -c ${id%_R1*}.sam
-samtools view -F 4 -c ${id%_R1*}_q20_s.bam
-rm ${id%_R1*}_q20.bam 
-rm ${id%_R1*}.sam
 bamCoverage -b ${id%_R1*}_q20_s.bam -o ${id%_R1*}.bigwig --binSize 10 --normalizeUsing RPKM
-echo "bg done" 
+echo "bigwig done" 
 featureCounts -T 8 -p -s 2 -t exon -g gene_id -F GTF  -a  ~/genome/tair10/genes.gtf -o  ${id%_R1*}.count  ${id%_R1*}_q20_s.bam
 echo "count done"
 sed '1d' ${id%_R1*}.count |  awk '{print $1"\t"$7}' > ${id%_R1*}.rawcount
 done
 echo "all done"
+

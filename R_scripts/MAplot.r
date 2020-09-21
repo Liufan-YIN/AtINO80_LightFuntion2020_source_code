@@ -1,6 +1,5 @@
 library("ggplot2")
-setwd("/Volumes/OpheliaData/atino80/atino80_0317/ChIPseq2/peaks_sicer2/diffbind/overlappeak/")
-FC <- read.delim("/Volumes/OpheliaData/atino80/atino80_0317/ChIPseq2/peaks_sicer2/diffbind/overlappeak/H2AZ_H3_FC.xls") 
+FC <- read.delim("H2AZ_H3_FC.xls") 
 MA_data <- data.frame(Avalue=FC[,6],Mvalue= -FC[,9],pvalue=FC[,10])
 MA_data <- MA_data[order(MA_data$pvalue,decreasing=TRUE),]
 row.names(MA_data) <- rep(1:nrow(MA_data))

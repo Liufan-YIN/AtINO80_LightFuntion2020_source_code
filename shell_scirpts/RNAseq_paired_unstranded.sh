@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 gzip -d *.fastq.gz 
-echo "jieya done"
+echo "unzip done"
 mkdir QC 
 fastqc -o QC -f fastq  *.fastq
 echo "qc done"
@@ -28,12 +28,8 @@ samtools sort ${id%_R1*}_q20.bam -o ${id%_R1*}_q20_s.bam
 echo "sort done"
 samtools index ${id%_R1*}_q20_s.bam
 echo "index done"
-samtools view -F 4 -c ${id%_R1*}.sam
-samtools view -F 4 -c ${id%_R1*}_q20_s.bam
-rm ${id%_R1*}_q20.bam 
-rm ${id%_R1*}.sam
 bamCoverage -b ${id%_R1*}_q20_s.bam -o ${id%_R1*}.bigwig --binSize 10 --normalizeUsing RPKM
-echo "bg done" 
+echo "bigwig done" 
 featureCounts -T 4 -p -s 0 -t exon -g gene_id -F GTF  -a  ~/genome/tair10/genes.gtf -o  ${id%_R1*}.count  ${id%_R1*}_q20_s.bam
 echo "count done"
 sed '1d' ${id%_R1*}.count |  awk '{print $1"\t"$7}' > ${id%_R1*}.rawcount

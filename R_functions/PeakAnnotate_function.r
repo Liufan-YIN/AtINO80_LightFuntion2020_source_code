@@ -1,7 +1,9 @@
-peakanno=function(filename,samplename) {
+Peakanno=function(filename,samplename) {
+  #packages
   suppressMessages(library("ChIPpeakAnno"));
   suppressMessages(library("TxDb.Athaliana.BioMart.plantsmart28"));
   txdb=TxDb.Athaliana.BioMart.plantsmart28;
+  #filename-filename for input files including peak position; samplename-name of sample and the prefix of output file
   annDatagene=genes(txdb);
   peaks <- read.delim(filename,header=T)
   peaks_ranges <- GRanges(seqnames=peaks[,1],ranges=IRanges(start=peaks[,2],end=peaks[,3],names=paste("peak",rep(1:nrow(peaks)),sep="")),strand="*",seqinfo=seqinfo(txdb))

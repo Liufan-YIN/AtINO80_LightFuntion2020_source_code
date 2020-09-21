@@ -1,9 +1,11 @@
 Peakover <- function(Afilename,Bfilename,peak1name,peak2name,mainname){
+ #packages
  suppressMessages(library("ChIPpeakAnno"))
  suppressMessages(library("GenomicRanges"))
  suppressMessages(library(BSgenome))
  suppressMessages(library(regioneR))
  suppressMessages(library(BSgenome.Athaliana.TAIR.TAIR9))
+ #Afilename-filename of Afile; Bfilename-filename of Bfile; peak1name-name of peaks in Afile; peak2name-name of peaks in Bfile; mainname-prefiex of name in outputfile
  a <- data.frame(getGenome("TAIR9"))
  TAIR10 <- GRanges(seqnames=c(1,2,3,4,5,"Mt","Pt"),ranges=IRanges(start=a[,2],end=a[,3]),strand="*")
  Afile <- read.delim(Afilename,header=F)

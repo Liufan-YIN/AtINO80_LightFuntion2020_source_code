@@ -1,10 +1,10 @@
-Plot <- function(Path,Afilename,Bfilename,Asamplename,Bsamplename,mainname) {
+OverlapPlot <- function(Afilename,Bfilename,Asamplename,Bsamplename,mainname) {
+  #packages
   suppressMessages(library(VennDiagram))  
   suppressMessages(library("ggplot2"))
   suppressMessages(library(clusterProfiler))
   suppressMessages(library(org.At.tair.db))
-  #path-the cutrrent path,Afilename-target genes, Bfilename-diffregulated genes
-  setwd(Path)
+  #Afilename-light regulated genes; Bfilename-differentially regulated genes; Asamplename-names of Afile; Bsamplename-names of Bfile; mainname-name prefix of output files
   Afile <- read.delim(Afilename,header=T)
   Bfile <- read.delim(Bfilename,header=T)
   #venn
@@ -17,9 +17,7 @@ Plot <- function(Path,Afilename,Bfilename,Asamplename,Bsamplename,mainname) {
   venn.diagram(list(Asamplename=Afile[,1],Bsamplename=row.names(Bfile)),resolution = 300, imagetype = "tiff", alpha=c(0.5,0.5),fill=c("red","green"),filename = paste(mainname,"venn.tiff")) 
   #scatterplot
   print("scatterplot")
-  SetA   <- Bfile
-  Target <- Afile
-  exp <- subset(SetA,is.element(row.names(SetA),Target[,1])==T)[,c(2,5)]
+  exp <- subset(Bfile,is.element(row.names(Bfile),Afile[,1])==T)[,c(2,5)]
   loc_up <- intersect(which(exp$log2FoldChange>=log2(1.5)),which(exp$pvalue<=0.05))
   loc_down <- intersect(which(exp$log2FoldChange <= -log2(1.5)),which(exp$pvalue<=0.05))
   sig <- rep("no",times=nrow(exp))
